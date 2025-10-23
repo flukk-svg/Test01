@@ -78,7 +78,14 @@
 <script>
 // === CONFIG: เปลี่ยนเป็น URL ของ Google Apps Script Web App ที่คุณ deploy แล้ว ===
 const API_URL = 'https://script.google.com/macros/s/AKfycbxHvhGjLkWAy7Bff9b3IHc28ok4BV4u-xOzHzvjDzeMpgr_4v8rCHxBEomKasty3Jd7/exec';
-
+function fileToBase64(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
 async function fetchData() {
   try {
     const res = await fetch(API_URL + '?action=get');
